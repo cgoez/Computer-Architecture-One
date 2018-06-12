@@ -4,7 +4,7 @@
 
 // Instruction set vars
 // 0b tells js this is a binary number
-const LDI = 0b10011001; 
+const LDI = 0b10011001;
 const PRN = 0b01000011;
 const HLT = 0b00000001;
 
@@ -108,8 +108,9 @@ class CPU {
         this.PC += 2;
         break;
 
-      // case HLT:
-      // this.stopClock()
+      case HLT:
+        // Halt and quit
+        this.stopClock();
 
       default:
         console.log("Unknown instruction: " + IR.toString(2));
