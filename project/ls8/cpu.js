@@ -3,7 +3,10 @@
  */
 
 // Instruction set vars
-const LDI = 0b10011001; // 0b tells js this is a binary number
+// 0b tells js this is a binary number
+const LDI = 0b10011001; 
+const PRN = 0b01000011;
+const HLT = 0b00000001;
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -90,26 +93,28 @@ class CPU {
     // !!! IMPLEMENT ME
     switch (IR) {
       case LDI:
-        // set the value in a register
+        // set the value in a register (R0)
         // LDI - Register Number - Immediate Value
-        // 10011001 00000rrr iiiiiiii        
-        this.reg[operandA] = operandB;  // register array[register number] = value
+        // 10011001 00000rrr iiiiiiii
+        this.reg[operandA] = operandB; // register array[register number] = value
         console.log[operandA] = operandB;
+        console.log(this.reg[operandA]);
         this.PC += 3; //next instruction
         break;
 
-      // case PRN:
-      //   console.log(this.reg[operandA]);
-      //   this.PC += 2;
-      //   break;
+      case PRN:
+        // Print value to register (R0)
+        console.log(this.reg[operandA]);
+        this.PC += 2;
+        break;
 
       // case HLT:
       // this.stopClock()
 
-      // default:
-      //   console.log("Unknown instruction: " + IR.toString(2));
-      //   this.stopClock(); // stop function
-      //   return;
+      default:
+        console.log("Unknown instruction: " + IR.toString(2));
+        this.stopClock(); // stop function
+        return;
     }
 
     // Increment the PC register to go to the next instruction. Instructions
