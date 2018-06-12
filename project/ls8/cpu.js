@@ -7,6 +7,7 @@
 const LDI = 0b10011001;
 const PRN = 0b01000011;
 const HLT = 0b00000001;
+const MUL = 0b10101010;
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -59,8 +60,12 @@ class CPU {
    */
   alu(op, regA, regB) {
     switch (op) {
-      case "MUL":
+      case MUL:
+        // Multiply both registers and store in regA
+        // MUL - regA - reg B
+        // 10101010 00000aaa 00000bbb
         // !!! IMPLEMENT ME
+        this.reg[regA] *= this.reg[regB];
         break;
     }
   }
@@ -78,7 +83,7 @@ class CPU {
     let IR = this.ram.read(this.PC);
 
     // Debugging output
-    console.log(`${this.PC}: ${IR.toString(2)}`);
+    // console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
@@ -97,20 +102,24 @@ class CPU {
         // LDI - Register Number - Immediate Value
         // 10011001 00000rrr iiiiiiii
         this.reg[operandA] = operandB; // register array[register number] = value
-        console.log[operandA] = operandB;
-        console.log(this.reg[operandA]);
-        this.PC += 3; //next instruction
+        this.PC += 3; // next instruction
         break;
 
       case PRN:
         // Print value to register (R0)
-        console.log(this.reg[operandA]);
-        this.PC += 2;
+        // PRN - Register Number
+        // 01000011 0000rrr
+        console.log(this.reg[operandA]); // should print 8
+        this.PC += 2; // next instruction
         break;
 
       case HLT:
         // Halt and quit
-        this.stopClock();
+        // HLT
+        // 00000001
+        this.stopClock(); // stop function
+        this.PC += 1;
+        break;
 
       default:
         console.log("Unknown instruction: " + IR.toString(2));
