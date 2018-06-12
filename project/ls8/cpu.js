@@ -60,12 +60,10 @@ class CPU {
    */
   alu(op, regA, regB) {
     switch (op) {
-      case MUL:
-        // Multiply both registers and store in regA
-        // MUL - regA - reg B
-        // 10101010 00000aaa 00000bbb
+      case "MUL":
         // !!! IMPLEMENT ME
-        this.reg[regA] *= this.reg[regB];
+        this.reg[regA] *= this.reg[regB]; // Multiply both registers and store in regA
+        this.PC += 3; // next instruction
         break;
     }
   }
@@ -83,7 +81,7 @@ class CPU {
     let IR = this.ram.read(this.PC);
 
     // Debugging output
-    // console.log(`${this.PC}: ${IR.toString(2)}`);
+    console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
@@ -103,6 +101,13 @@ class CPU {
         // 10011001 00000rrr iiiiiiii
         this.reg[operandA] = operandB; // register array[register number] = value
         this.PC += 3; // next instruction
+        break;
+
+      case MUL:
+        // Multiply R0*R1, storing result in R0
+        // MUL - R0 - R1
+        // 10101010 00000aaa 00000bbb
+        this.alu("MUL", operandA, operandB); // Pass to alu()
         break;
 
       case PRN:
