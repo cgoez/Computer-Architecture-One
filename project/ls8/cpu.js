@@ -2,6 +2,9 @@
  * LS-8 v2.0 emulator skeleton code
  */
 
+// Instruction set vars
+const LDI = 0b10011001; // 0b tells js this is a binary number
+
 /**
  * Class for simulating a simple Computer (CPU & memory)
  */
@@ -78,13 +81,36 @@ class CPU {
     // needs them.
 
     // !!! IMPLEMENT ME
-    let operandA = this.ram.read(PC + 1);
-    let operandB = this.ram.read(PC + 2);
+    let operandA = this.ram.read(this.PC + 1); // Register Number! (Index for register array)
+    let operandB = this.ram.read(this.PC + 2); // Immediate Value!
 
     // Execute the instruction. Perform the actions for the instruction as
     // outlined in the LS-8 spec.
 
     // !!! IMPLEMENT ME
+    switch (IR) {
+      case LDI:
+        // set the value in a register
+        // LDI - Register Number - Immediate Value
+        // 10011001 00000rrr iiiiiiii        
+        this.reg[operandA] = operandB;  // register array[register number] = value
+        console.log[operandA] = operandB;
+        this.PC += 3; //next instruction
+        break;
+
+      // case PRN:
+      //   console.log(this.reg[operandA]);
+      //   this.PC += 2;
+      //   break;
+
+      // case HLT:
+      // this.stopClock()
+
+      // default:
+      //   console.log("Unknown instruction: " + IR.toString(2));
+      //   this.stopClock(); // stop function
+      //   return;
+    }
 
     // Increment the PC register to go to the next instruction. Instructions
     // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
