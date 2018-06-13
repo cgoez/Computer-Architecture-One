@@ -10,6 +10,7 @@ const HLT = 0b00000001;
 const MUL = 0b10101010;
 const POP = 0b01001100;
 const PUSH = 0b01001101;
+const SP = 7;
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -133,7 +134,7 @@ class CPU {
         // PUSH - Register Number
         // 01001101 00000rrr
         this.reg[SP]--; // decrement SP
-        this.poke(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
+        this.ram.write(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
         break;
 
       case HLT:
@@ -156,6 +157,8 @@ class CPU {
     // for any particular instruction.
 
     // !!! IMPLEMENT ME
+    const instLen = (IR >> 6) + 1;
+    this.PC += instLen;
   }
 }
 
