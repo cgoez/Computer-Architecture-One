@@ -112,6 +112,14 @@ class CPU {
         this.alu("MUL", operandA, operandB); // Pass to alu()
         break;
 
+      case POP:
+        // Pop the value at the top of the stack into the given register.
+        // POP - Register Number
+        // 01001100 00000rrr
+        this.reg[operandA] = this.ram.read(this.reg[SP]); // Copy SP value to register
+        this.reg[SP]++; // increment SP
+        break;
+
       case PRN:
         // Print value to register (R0)
         // PRN - Register Number
