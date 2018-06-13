@@ -116,7 +116,7 @@ class CPU {
         // Pop the value at the top of the stack into the given register.
         // POP - Register Number
         // 01001100 00000rrr
-        this.reg[operandA] = this.ram.read(this.reg[SP]); // Copy SP value to register
+        this.reg[operandA] = this.ram.read(this.reg[SP]); // Copy value from SP address to register
         this.reg[SP]++; // increment SP
         break;
 
@@ -126,6 +126,14 @@ class CPU {
         // 01000011 0000rrr
         console.log(this.reg[operandA]); // should print 8
         this.PC += 2; // next instruction
+        break;
+
+      case PUSH:
+        // Push the given register on the stack.
+        // PUSH - Register Number
+        // 01001101 00000rrr
+        this.reg[SP]--; // decrement SP
+        this.poke(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
         break;
 
       case HLT:
