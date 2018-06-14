@@ -159,7 +159,7 @@ class CPU {
     // for any particular instruction.
 
     // !!! IMPLEMENT ME
-    const instLen = (IR >> 6) + 1;
+    const instLen = (IR >> 6) + 1; // operands + opcode
     this.PC += instLen;
   }
 }
