@@ -72,6 +72,9 @@ class CPU {
         this.reg[regA] *= this.reg[regB]; // Multiply both registers and store in regA
         // this.PC += 3; // next instruction
         break;
+
+      case "ADD":
+        this.reg[regA] += this.reg[regB]; // Add both registers and store in regA
     }
   }
 
@@ -102,6 +105,13 @@ class CPU {
 
     // !!! IMPLEMENT ME
     switch (IR) {
+      case ADD:
+        // Add two registers and store in register A
+        // ADD - R0 - R1
+        // 10101000 00000aaa 00000bbb
+        this.alu("ADD", operandA, operandB);
+        break;
+
       case CALL:
         // Call subroutine at address stored in register
         // CALL - Register Number
