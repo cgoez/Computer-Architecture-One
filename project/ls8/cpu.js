@@ -4,6 +4,7 @@
 
 // Instruction set vars
 // 0b tells js this is a binary number
+const ADD = 0b10101000;
 const CALL = 0b01001000;
 const HLT = 0b00000001;
 const LDI = 0b10011001;
