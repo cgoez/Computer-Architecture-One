@@ -23,9 +23,11 @@ class CPU {
     this.ram = ram;
 
     this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
+    this.reg[SP] = 0xF4
 
     // Special-purpose registers
     this.PC = 0; // Program Counter
+    
   }
 
   /**
@@ -66,7 +68,7 @@ class CPU {
       case "MUL":
         // !!! IMPLEMENT ME
         this.reg[regA] *= this.reg[regB]; // Multiply both registers and store in regA
-        this.PC += 3; // next instruction
+        // this.PC += 3; // next instruction
         break;
     }
   }
@@ -103,7 +105,7 @@ class CPU {
         // LDI - Register Number - Immediate Value
         // 10011001 00000rrr iiiiiiii
         this.reg[operandA] = operandB; // register array[register number] = value
-        this.PC += 3; // next instruction
+        // this.PC += 3; // next instruction
         break;
 
       case MUL:
@@ -126,7 +128,7 @@ class CPU {
         // PRN - Register Number
         // 01000011 0000rrr
         console.log(this.reg[operandA]); // should print 8
-        this.PC += 2; // next instruction
+        // this.PC += 2; // next instruction
         break;
 
       case PUSH:
@@ -134,7 +136,7 @@ class CPU {
         // PUSH - Register Number
         // 01001101 00000rrr
         this.reg[SP]--; // decrement SP
-        this.ram.write(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
+        this.poke(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
         break;
 
       case HLT:
@@ -142,7 +144,7 @@ class CPU {
         // HLT
         // 00000001
         this.stopClock(); // stop function
-        this.PC += 1;
+        // this.PC += 1;
         break;
 
       default:
