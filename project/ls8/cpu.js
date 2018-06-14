@@ -110,6 +110,14 @@ class CPU {
         this.PC = this.reg[operandA]; // PC set to address in registerA
         break;
 
+      case HLT:
+        // Halt and quit
+        // HLT
+        // 00000001
+        this.stopClock(); // stop function
+        // this.PC += 1;
+        break;
+
       case LDI:
         // set the value in a register (R0)
         // LDI - Register Number - Immediate Value
@@ -149,12 +157,12 @@ class CPU {
         this.poke(this.reg[SP], this.reg[operandA]); // copy value from register to SP address
         break;
 
-      case HLT:
-        // Halt and quit
-        // HLT
-        // 00000001
-        this.stopClock(); // stop function
-        // this.PC += 1;
+      case RET:
+        // Return from subroutine
+        // RET
+        // 00001001
+        this.PC = this.ram.read(this.reg[SP]); //
+        this.reg[SP]++; // increment SP
         break;
 
       default:
