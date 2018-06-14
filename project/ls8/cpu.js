@@ -87,7 +87,7 @@ class CPU {
     let IR = this.ram.read(this.PC);
 
     // Debugging output
-    // console.log(`${this.PC}: ${IR.toString(2)}`);
+    console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
@@ -101,6 +101,15 @@ class CPU {
 
     // !!! IMPLEMENT ME
     switch (IR) {
+      case CALL:
+        // Call subroutine at address stored in register
+        // CALL - Register Number
+        // 01001000 00000rrr
+        this.reg[SP]--; // decrement SP (next inst)
+        this.poke(this.reg[SP], this.PC + 2); // address of next int pushed to stack
+        this.PC = this.reg[operandA]; // PC set to address in registerA
+        break;
+
       case LDI:
         // set the value in a register (R0)
         // LDI - Register Number - Immediate Value
