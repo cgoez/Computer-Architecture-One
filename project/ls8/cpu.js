@@ -4,12 +4,14 @@
 
 // Instruction set vars
 // 0b tells js this is a binary number
-const LDI = 0b10011001;
-const PRN = 0b01000011;
+const CALL = 0b01001000;
 const HLT = 0b00000001;
+const LDI = 0b10011001;
 const MUL = 0b10101010;
 const POP = 0b01001100;
+const PRN = 0b01000011;
 const PUSH = 0b01001101;
+const RET = 0b00001001;
 const SP = 7;
 
 /**
@@ -23,11 +25,10 @@ class CPU {
     this.ram = ram;
 
     this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
-    this.reg[SP] = 0xF4
+    this.reg[SP] = 0xf4;
 
     // Special-purpose registers
     this.PC = 0; // Program Counter
-    
   }
 
   /**
@@ -86,7 +87,7 @@ class CPU {
     let IR = this.ram.read(this.PC);
 
     // Debugging output
-    console.log(`${this.PC}: ${IR.toString(2)}`);
+    // console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
